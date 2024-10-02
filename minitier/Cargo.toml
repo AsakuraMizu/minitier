@@ -1,0 +1,21 @@
+[package]
+name = "minitier"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = { workspace = true }
+etherparse = { workspace = true }
+futures-util = { workspace = true }
+ipnet = { workspace = true, features = ["serde"] }
+quinn = { workspace = true }
+serde = { workspace = true }
+tracing-subscriber = { workspace = true }
+tracing = { workspace = true }
+tokio = { workspace = true, features = ["signal"] }
+toml = { workspace = true }
+
+tokio-util = { version = "0.7.12", features = ["codec"] }
+tun2 = { version = "3.1.5", features = ["async"] }
+uuid = { version = "1.10.0", features = ["serde", "v4"] }
+url = { version = "2.5.2", features = ["serde"] }

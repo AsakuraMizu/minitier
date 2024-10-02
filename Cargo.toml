@@ -1,0 +1,22 @@
+[workspace]
+resolver = "2"
+members = ["minitier", "minitier-server"]
+
+[workspace.dependencies]
+anyhow = "1.0.89"
+bytes = "1.7.2"
+etherparse = "0.16.0"
+futures-util = "0.3.30"
+ipnet = "2.10.0"
+quinn = "0.11.5"
+serde = { version = "1.0.210", features = ["derive"] }
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
+tracing = "0.1.40"
+tokio = { version = "1.40.0", features = ["macros", "rt", "rt-multi-thread"] }
+toml = { version = "0.8.19", default-features = false, features = ["parse"] }
+
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1
+opt-level = "z"

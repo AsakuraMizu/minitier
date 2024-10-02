@@ -1,0 +1,12 @@
+[server]
+bind = "0.0.0.0:50500"
+cert = "cert.der"
+key = "key.der"
+
+[server.transport]
+max_idle_timeout = 10
+keep_alive_interval = 5
+
+[[exclude]]
+type = "udp"
+dst_port = 50201
