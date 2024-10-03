@@ -7,12 +7,13 @@ Minimal self-hosted ZeroTier-like software based on TUN. Designed originally for
 ## Features
 
 - Secure and fast connection via QUIC
+- Minimized binary size (<4 MB)
 - Packet filter (WIP)
 - ...
 
 ## Supported platforms (tested on)
 
-- [x] Microsoft Windows
+- [x] Microsoft Windows (`wintun.dll` needed)
 - [x] Linux
 - [ ] ...
 

@@ -16,6 +16,7 @@ tracing = { workspace = true }
 tokio = { workspace = true, features = ["signal"] }
 toml = { workspace = true }
 
+enable-ansi-support = "0.2.1"
 tokio-util = { version = "0.7.12", features = ["codec"] }
 tun2 = { version = "3.1.5", features = ["async"] }
 url = { version = "2.5.2", features = ["serde"] }

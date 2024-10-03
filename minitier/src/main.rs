@@ -10,6 +10,7 @@ mod config;
 
 #[tokio::main]
 async fn main() -> anyhow::Result<()> {
+    let _ = enable_ansi_support::enable_ansi_support();
     tracing_subscriber::fmt::init();
 
     rustls::crypto::ring::default_provider()

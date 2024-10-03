@@ -1,5 +1,5 @@
 [server]
-url = "https://localhost:50500"
+url = "https://chuni.stellopath.net:50500"
 # host = "localhost"
 # insecure = true
 # cert = "chain.pem"
