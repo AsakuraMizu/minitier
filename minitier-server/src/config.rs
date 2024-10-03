@@ -1,8 +1,7 @@
-use std::{fs, net::SocketAddr, path::PathBuf, sync::Arc, time::Duration};
+use std::{net::SocketAddr, path::PathBuf, sync::Arc, time::Duration};
 
-use anyhow::Context;
 use etherparse::{SlicedPacket, TransportSlice};
-use quinn::rustls::pki_types::{CertificateDer, PrivateKeyDer, PrivatePkcs8KeyDer};
+use rustls::pki_types::{pem::PemObject, CertificateDer, PrivateKeyDer};
 use serde::Deserialize;
 use serde_with::{serde_as, DisplayFromStr, DurationSeconds};
 
@@ -27,12 +26,12 @@ pub struct ServerConfig {
 
 impl ServerConfig {
     fn configure(&self) -> anyhow::Result<quinn::ServerConfig> {
-        let key = PrivateKeyDer::Pkcs8(PrivatePkcs8KeyDer::from(
-            fs::read(&self.key).context("Failed to read private key")?,
-        ));
-        let cert_chain =
-            CertificateDer::from(fs::read(&self.cert).context("Failed to read certificate chain")?);
-        let mut server_config = quinn::ServerConfig::with_single_cert(vec![cert_chain], key)?;
+        let cert_chain: Vec<_> = CertificateDer::pem_file_iter(&self.cert)
+            .expect("Failed to read certificate")
+            .collect::<Result<Vec<_>, _>>()
+            .expect("Failed to parse certificate");
+        let key = PrivateKeyDer::from_pem_file(&self.key).expect("Failed to read private key");
+        let mut server_config = quinn::ServerConfig::with_single_cert(cert_chain, key)?;
         let transport = Arc::get_mut(&mut server_config.transport).unwrap();
         if let Some(timeout) = self.transport.max_idle_timeout {
             transport.max_idle_timeout(Some(timeout.try_into()?));

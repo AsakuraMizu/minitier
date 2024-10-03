@@ -1,8 +1,8 @@
 [server]
-url = "https://127.0.0.1:50500"
-host = "chuni.stellopath.net"
+url = "https://localhost:50500"
+# host = "localhost"
 # insecure = true
-cert = "cert.der"
+# cert = "chain.pem"
 # bind = "[::]:0"
 
 [tun]
@@ -12,4 +12,5 @@ name = "concab"
 addr = "192.168.139.11/24"
 # Gateway IP address
 dest = "192.168.139.1"
+# Windows only: GUID of the device
 # guid = "e1fd7f84-1bda-4459-9f2b-57b861d857a0"

@@ -9,6 +9,7 @@ etherparse = { workspace = true }
 futures-util = { workspace = true }
 ipnet = { workspace = true }
 quinn = { workspace = true }
+rustls = { workspace = true }
 serde = { workspace = true }
 tracing-subscriber = { workspace = true }
 tracing = { workspace = true }
@@ -16,6 +17,3 @@ tokio = { workspace = true, features = ["sync"] }
 toml = { workspace = true }
 
 serde_with = "3.9.0"
-
-[dev-dependencies]
-rcgen = "0.13.1"

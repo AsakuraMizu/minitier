@@ -12,6 +12,10 @@ mod config;
 async fn main() -> anyhow::Result<()> {
     tracing_subscriber::fmt::init();
 
+    rustls::crypto::ring::default_provider()
+        .install_default()
+        .unwrap();
+
     let config = toml::from_str::<config::Config>(
         &fs::read_to_string("minitier.toml").context("Failed to read configuration file")?,
     )

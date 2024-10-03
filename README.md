@@ -6,10 +6,14 @@ Minimal self-hosted ZeroTier-like software based on TUN. Designed originally for
 
 ## Features
 
-- Packet filter
+- Secure and fast connection via QUIC
+- Packet filter (WIP)
 - ...
 
-## Supported platforms
+## Supported platforms (tested on)
 
 - [x] Microsoft Windows
+- [x] Linux
 - [ ] ...
+
+Note: The server supports any platform.

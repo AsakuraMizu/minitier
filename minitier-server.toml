@@ -1,7 +1,7 @@
 [server]
 bind = "0.0.0.0:50500"
-cert = "cert.der"
-key = "key.der"
+cert = "fullchain.pem"
+key = "privkey.pem"
 
 [server.transport]
 max_idle_timeout = 10

@@ -6,9 +6,13 @@ members = ["minitier", "minitier-server"]
 anyhow = "1.0.89"
 bytes = "1.7.2"
 etherparse = "0.16.0"
-futures-util = "0.3.30"
+futures-util = { version = "0.3.30", features = ["sink"] }
 ipnet = "2.10.0"
 quinn = "0.11.5"
+rustls = { version = "0.23.13", default-features = false, features = [
+    "std",
+    "ring",
+] }
 serde = { version = "1.0.210", features = ["derive"] }
 tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
 tracing = "0.1.40"

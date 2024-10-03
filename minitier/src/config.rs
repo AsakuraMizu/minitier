@@ -1,5 +1,4 @@
 use std::{
-    fs,
     net::{IpAddr, Ipv4Addr, Ipv6Addr, SocketAddr},
     path::PathBuf,
     sync::Arc,
@@ -7,10 +6,11 @@ use std::{
 
 use anyhow::Context;
 use ipnet::Ipv4Net;
-use quinn::rustls;
+use rustls::pki_types::{pem::PemObject, CertificateDer};
 use serde::Deserialize;
 use tokio::net::lookup_host;
 use url::Url;
+#[cfg(target_os = "windows")]
 use uuid::Uuid;
 
 #[derive(Deserialize)]
@@ -54,9 +54,14 @@ impl ServerConfig {
                 config,
             )?))
         } else if let Some(cert_path) = &self.cert {
-            let cert = fs::read(cert_path).context("Failed to read certificate")?;
+            let cert_chain: Vec<_> = CertificateDer::pem_file_iter(cert_path)
+                .expect("Failed to read certificate")
+                .collect::<Result<Vec<_>, _>>()
+                .expect("Failed to parse certificate");
             let mut roots = rustls::RootCertStore::empty();
-            roots.add(rustls::pki_types::CertificateDer::from(cert))?;
+            for cert in cert_chain {
+                roots.add(cert).context("Failed to add certificate")?;
+            }
             quinn::ClientConfig::with_root_certificates(Arc::new(roots))?
         } else {
             quinn::ClientConfig::with_platform_verifier()
@@ -85,6 +90,7 @@ pub struct TunConfig {
     name: String,
     addr: Ipv4Net,
     dest: Ipv4Addr,
+    #[cfg(target_os = "windows")]
     guid: Option<Uuid>,
 }
 
@@ -97,11 +103,15 @@ impl TunConfig {
             .destination(self.dest)
             .tun_name(&self.name)
             .mtu(tun2::DEFAULT_MTU)
-            .metric(500)
             .up()
             .platform_config(|config| {
+                #[cfg(target_os = "windows")]
                 config.device_guid(self.guid.unwrap_or_else(Uuid::new_v4).as_u128());
+                #[cfg(target_os = "linux")]
+                config.ensure_root_privileges(true);
             });
+        #[cfg(target_os = "windows")]
+        config.metric(500);
         config
     }
 
@@ -128,7 +138,7 @@ fn strip_ipv6_brackets(host: &str) -> &str {
 }
 
 mod insecure {
-    use quinn::rustls::{
+    use rustls::{
         client::danger::{HandshakeSignatureValid, ServerCertVerified, ServerCertVerifier},
         crypto::{ring, verify_tls12_signature, verify_tls13_signature, WebPkiSupportedAlgorithms},
         pki_types::{CertificateDer, ServerName, UnixTime},
