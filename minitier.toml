@@ -12,5 +12,6 @@ name = "concab"
 addr = "192.168.139.11/24"
 # Gateway IP address
 dest = "192.168.139.1"
+mtu = 1500
 # Windows only: GUID of the device
 # guid = "e1fd7f84-1bda-4459-9f2b-57b861d857a0"

@@ -90,6 +90,7 @@ pub struct TunConfig {
     name: String,
     addr: Ipv4Net,
     dest: Ipv4Addr,
+    mtu: Option<u16>,
     #[cfg(target_os = "windows")]
     guid: Option<Uuid>,
 }
@@ -102,7 +103,7 @@ impl TunConfig {
             .netmask(self.addr.netmask())
             .destination(self.dest)
             .tun_name(&self.name)
-            .mtu(tun2::DEFAULT_MTU)
+            .mtu(self.mtu.unwrap_or(tun2::DEFAULT_MTU))
             .up()
             .platform_config(|config| {
                 #[cfg(target_os = "windows")]

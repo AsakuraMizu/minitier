@@ -1,5 +1,5 @@
 [server]
-bind = "0.0.0.0:50500"
+bind = "[::]:50500"
 cert = "fullchain.pem"
 key = "privkey.pem"
 
