@@ -1,0 +1,31 @@
+[package]
+name = "minitier"
+version = "0.2.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1.0.91"
+enable-ansi-support = "0.2.1"
+etherparse = "0.16.0"
+futures-util = "0.3.31"
+ipnet = { version = "2.10.1", features = ["serde"] }
+iroh = "0.27.0"
+serde = { version = "1.0.214", features = ["derive"] }
+serde_with = "3.11.0"
+tokio = { version = "1.41.0", features = ["rt", "rt-multi-thread", "macros"] }
+toml = { version = "0.8.19", default-features = false, features = ["parse"] }
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.18", features = ["env-filter"] }
+tun2 = { version = "4.0.0", features = ["async"] }
+
+[target.'cfg(target_os = "windows")'.dependencies]
+uuid = { version = "1.10.0", features = ["serde", "v4"] }
+
+[dev-dependencies]
+blake3 = "1.5.4"
+
+[profile.release]
+strip = true
+lto = true
+codegen-units = 1
+opt-level = "z"

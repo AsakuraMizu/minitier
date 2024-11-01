@@ -1,0 +1,5 @@
+[target.'cfg(target_os = "windows")']
+runner = "gsudo"
+
+[target.'cfg(target_os = "linux")']
+runner = "sudo -E"

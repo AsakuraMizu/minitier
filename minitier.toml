@@ -1,0 +1,34 @@
+[node]
+# data_dir = "data"
+
+# [node.relay]
+# url = ""
+# stun_only = false
+# stun_port = 0
+
+[tun]
+name = "minitier"
+addr = "192.168.139.11/24"
+# mtu = 1500
+# Windows only: GUID of the device
+# guid = "e1fd7f84-1bda-4459-9f2b-57b861d857a0"
+
+[net]
+topic = "6rwxw62hil3gvj3klkalrdzqpky7tdnnohixvo7ozz25xqbhuojq" # see examples/topic.rs
+bootstrap = []
+
+[[incoming]]
+src = "192.168.139.0/24"
+# [incoming.proto]
+# proto = "icmp"
+
+# proto = "tcp"
+# src_port = 1234
+# dst_port = 1234
+
+# proto = "udp"
+# src_port = 1234
+# dst_port = 1234
+
+[[outgoing]]
+dest = "192.168.139.0/24"
