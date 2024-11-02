@@ -10,3 +10,7 @@ keep_alive_interval = 5
 [[exclude]]
 type = "udp"
 dst_port = 50201
+
+[[exclude]]
+type = "udp"
+dst_port = 40112
